@@ -2,9 +2,9 @@
 set -eux
 
 #
-ISSUPPORTED=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nprint ClusterManifestParser.parse_local_manifest().settings.get('enable_security') == 'false' and ClusterManifestParser.parse_local_manifest().settings.get('cluster_type') == 'hadoop'" | python) 
+ISSUPPORTED=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nprint ClusterManifestParser.parse_local_manifest().settings.get('enable_security') == 'false'" | python) 
 if [[ "$ISSUPPORTED" != "True" ]]; then 
-  echo "Presto installation is only supported on hadoop cluster types. Other cluster types (Spark, Kafka, Secure Hadoop etc are not supported yet. Aborting." ; 
+  echo "Presto installation is only supported on hadoop / Spark cluster types. Other cluster types (Spark, Kafka, Secure Hadoop etc are not supported yet. Aborting." ; 
   exit 1
 fi
 
