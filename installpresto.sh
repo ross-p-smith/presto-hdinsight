@@ -1,20 +1,6 @@
 #!/bin/bash
 set -eux
 
-#
-ISSUPPORTED=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nprint ClusterManifestParser.parse_local_manifest().settings.get('enable_security') == 'false'" | python) 
-if [[ "$ISSUPPORTED" != "True" ]]; then 
-  echo "Presto installation is only supported on hadoop / Spark cluster types. Other cluster types (Spark, Kafka, Secure Hadoop etc are not supported yet. Aborting." ; 
-  exit 1
-fi
-
-# check if we have atleast 4 nodes
-nodes=$(curl -L http://headnodehost:8088/ws/v1/cluster/nodes |  grep -o '"nodeHostName":'  | wc -l)
-if [[ $nodes -lt 1 ]]; then 
-  echo "you need atleast 1 node hadoop cluster to run presto on HDI. Aborting."
-  exit 1
-fi 
-
 VERSION=0.208
 
 mkdir -p /var/lib/presto
